@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Location Checker</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body
+        class="bg-[#e0e0e0] font-sans text-center pt-24 min-h-screen flex flex-col items-center justify-start shadow-[10px_10px_20px_#bebebe,-10px_-10px_20px_#ffffff]"
+    >
+        <button
+            onclick="getLocation()"
+            class="bg-[#e1ffe0] rounded-2xl px-8 py-4 text-lg shadow-[inset_6px_6px_12px_#bebebe,inset_-6px_-6px_12px_#ffffff] hover:bg-white hover:shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] transition-all cursor-pointer select-none"
+        >
+            Check My Location
+        </button>
+        <p
+            id="output"
+            class="mt-6 text-lg text-gray-700 bg-[#f6fff4] rounded-2xl px-10 py-6 shadow-[10px_10px_20px_#bebebe,-10px_-10px_20px_#ffffff] min-w-[150px] inline-block select-none"
+        ></p>
+
+        <script>
+            function getLocation() {
+                const output = document.getElementById("output");
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            const lat = position.coords.latitude;
+                            const lon = position.coords.longitude;
+                            output.innerHTML = `${lat},${lon}`;
+                        },
+                        function (error) {
+                            output.innerHTML = "Error: " + error.message;
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 1000,
+                            maximumAge: 0,
+                        },
+                    );
+                } else {
+                    output.innerHTML =
+                        "Geolocation is not supported by this browser.";
+                }
+            }
+        </script>
+    </body>
+</html>
